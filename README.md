@@ -12,7 +12,7 @@ git clone https://github.com/bellom/ordering-system
 
 2. Run `npm install`
 
-3. Run `yarn run dev`
+3. Run `npm start`
 
 
 
