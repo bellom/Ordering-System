@@ -2,7 +2,7 @@ const express = require('express');
 require('dotenv').config();
 const sql = require('mssql')
 const app = express();
-const port = 5500;
+const port = 3001;
 const table = 'customers'
 
 app.listen(port, () => {
