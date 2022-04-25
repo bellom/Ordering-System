@@ -1,6 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { LandingPage } from "components/LandingPage";
 import reportWebVitals from "./reportWebVitals";
 import { LoginPage } from "components/LoginPage";
