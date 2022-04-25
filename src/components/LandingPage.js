@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { Link } from "react-router-dom";
 import ParticlesBg from "particles-bg";
 import Fade from "react-reveal";
 
@@ -24,12 +25,12 @@ export class LandingPage extends Component {
             <hr />
             <Fade bottom duration={2000}>
               <ul className="social">
-                <a href="google.com" className="button btn project-btn">
+                <Link to="/adminlogin" className="button btn project-btn">
                   <i className="fa fa-book"></i>Login as Admin
-                </a>
-                <a href="google.com" className="button btn github-btn">
+                </Link>
+                <Link to="/login" className="button btn github-btn">
                   <i className="fa fa-book"></i>Login as User
-                </a>
+                </Link>
               </ul>
             </Fade>
           </div>

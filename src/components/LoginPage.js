@@ -4,11 +4,11 @@ import './Login.css';
 export function LoginPage() {
   return (
     <div className="login-wrapper">
-      <h1>Please Log In</h1>
+      <h1>Please Login as User</h1>
       <form>
         <label>
           <p>Username</p>
-          <input type="text" />
+          <input type="text" placeholder='User' />
         </label>
         <label>
           <p>Password</p>

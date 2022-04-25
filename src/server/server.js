@@ -3,7 +3,7 @@ require('dotenv').config();
 const sql = require('mssql')
 const app = express();
 const port = 3001;
-const table = 'customers'
+const table = 'users'
 
 app.listen(port, () => {
   console.log(`App server now listening to port ${port}`);
