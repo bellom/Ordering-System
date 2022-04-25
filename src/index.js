@@ -1,11 +1,23 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import App from './app/app';
+import React from "react";
+import ReactDOM from "react-dom";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { LandingPage } from "components/LandingPage";
+import reportWebVitals from "./reportWebVitals";
+import { LoginPage } from "components/LoginPage";
+import { LoginPageAdmin } from "components/LoginPageAdmin";
 
-ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
-  document.getElementById('root')
-);
+export default function App() {
+  return (
+    <Router>
+      <Routes>
+        <Route path="/" element={<LandingPage />} />
+        <Route path="/login" element={<LoginPage />} />
+        <Route path="/adminlogin" element={<LoginPageAdmin />} />
+      </Routes>
+    </Router>
+  );
+}
 
+ReactDOM.render(<App />, document.getElementById("root"));
+
+reportWebVitals();
