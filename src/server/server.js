@@ -1,9 +1,13 @@
 const express = require('express');
 require('dotenv').config();
 const sql = require('mssql')
+const cors = require('cors')
 const app = express();
 const port = 3001;
 const table = 'users'
+
+app.use(express.json());
+app.use(cors());
 
 app.listen(port, () => {
   console.log(`App server now listening to port ${port}`);
@@ -25,9 +29,27 @@ const sqlConfig = {
   }
 }
 
-app.get('/api/customers', (req, res) => {
+app.get('/api/users', (req, res) => {
   sql.connect(sqlConfig)
   sql.query(`select * from ${table}`, (err, rows) => {
     res.send(rows);
+  });
+});
+
+app.post('/api/login', (req, res) => {
+  const username = req.body.username;
+  const password = req.body.password;
+
+  sql.connect(sqlConfig)
+  sql.query('SELECT * FROM users WHERE username = ? AND password = ?', [username, password], (err, result) => {
+    if(err) {
+      res.send({ err: err });
+    }
+
+    if (result) {
+      res.send(result)
+    } else {
+      res.send({ message: "Wrong username or password" })
+    }
   });
 });
