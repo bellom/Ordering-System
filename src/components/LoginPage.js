@@ -11,9 +11,16 @@ export function LoginPage() {
       username: username,
       password: password,
     }).then((response) => {
-      console.log(response);
+      if(response.data.message) {
+        setLoginStatus(response.data.message)
+      } else {
+        setLoginStatus(response.data[0].username);
+      } 
+      console.log(response.data);
     });
   };
+
+  const [loginStatus, setLoginStatus] = useState("");
 
   return (
     <div className="login-wrapper">
@@ -28,9 +35,10 @@ export function LoginPage() {
           <input type="password" onChange={(e) => setPassword(e.target.value)}/>
         </label>
         <div>
-          <button type="submit">Submit</button>
+          <button type="submit" onClick={ login }>Submit</button>
         </div>
       </form>
+      <h1>{loginStatus} </h1>
     </div>
   );
 }
