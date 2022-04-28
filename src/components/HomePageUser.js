@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import { Link } from "react-router-dom";
 import ParticlesBg from "particles-bg";
 import Fade from "react-reveal";
 
@@ -20,16 +19,6 @@ export class HomePageUser extends Component {
               <h3>Login as a User to view list of products</h3>
             </Fade>
             <hr />
-            <Fade bottom duration={2000}>
-              <ul className="social">
-                <Link to="/adminlogin" className="button btn project-btn">
-                  <i className="fa fa-book"></i>Login as Admin
-                </Link>
-                <Link to="/login" className="button btn github-btn">
-                  <i className="fa fa-book"></i>Login as User
-                </Link>
-              </ul>
-            </Fade>
           </div>
         </div>
       </header>

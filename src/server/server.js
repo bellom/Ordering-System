@@ -9,13 +9,13 @@ const table = "users";
 
 app.use(cors());
 app.use(express.json());
-app.use(express.urlencoded({extended: true}))
+app.use(express.urlencoded({ extended: true }));
 
 app.use(
   session({
     secret: "login",
     resave: true,
-    saveUninitialized: true
+    saveUninitialized: true,
   })
 );
 
@@ -42,7 +42,7 @@ const sqlConfig = {
 app.get("/api/users", async (req, res) => {
   let pool = await sql.connect(sqlConfig);
   pool.request().query(`select * from ${table}`, (err, data) => {
-    if(data) {
+    if (data) {
       res.send(data.recordset);
       console.log("List of users?", data.recordset);
     } else {
@@ -51,51 +51,26 @@ app.get("/api/users", async (req, res) => {
   });
 });
 
-app.post("/api/login", async (req, res) => {
-  const username = req.body.username;
-  const password = req.body.password;
-  console.log("req.body:", username, password)
-  const pool = await sql.connect(sqlConfig);
-  pool
-    .request()
-    .query(
-      "SELECT * FROM users WHERE username = ? AND password = ?",
-      [username, password],
-      (err, result) => {
-        if (err) {
-          res.send({ err: err });
-        }
-
-        if (result.length > 0) {
-          res.send(result);
-        } else {
-          res.send({ message: "Wrong username or password" });
-        }
-      }
-    );
-});
-
-
-app.post("/api/admin", async function(request, response) {
+app.post("/api/admin", async function (request, response) {
   const username = request.body.username;
   const password = request.body.password;
+  console.log("req.body:", username, password);
   let pool = await sql.connect(sqlConfig);
-  console.log("req.body:", username, password)
   if (username && password) {
-    pool.request().query(
-      "SELECT * FROM accounts WHERE username = ? AND password = ?",
-      [username, password],
-      function(error, results, fields) {
-        if (results.length > 0) {
-          request.session.loggedin = true;
-          request.session.username = username;
-          return results;
-        } else {
-          response.send("Incorrect Username and/or Password!");
-        }
-        response.end();
-      }
-    );
+    let results = await pool
+      .request()
+      .query(
+        `SELECT * FROM ${table} WHERE username = ${username} AND password = ${password}`
+      );
+    console.log(results);
+    if (results.length > 0) {
+      request.session.loggedin = true;
+      request.session.username = username;
+      return results;
+    } else {
+      response.send("Incorrect Username and/or Password!");
+    }
+    response.end();
   } else {
     response.send("Please enter Username and Password!");
     response.end();
