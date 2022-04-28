@@ -15,6 +15,7 @@ export function LoginPage() {
         setLoginStatus(response.data.message)
       } else {
         setLoginStatus(response.data[0].username);
+        this.props.history.push('/user');
       } 
       console.log(response.data);
     });

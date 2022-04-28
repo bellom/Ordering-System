@@ -15,6 +15,7 @@ export function LoginPageAdmin() {
         setLoginStatus(response.data.message)
       } else {
         setLoginStatus(response.data[0].username);
+        this.props.history.push('/admin');
       } 
       console.log(response.data);
     });
