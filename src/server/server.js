@@ -3,6 +3,7 @@ const express = require("express");
 const sql = require("mssql");
 const cors = require("cors");
 const session = require("express-session");
+const { redirect } = require("express/lib/response");
 const app = express();
 const port = 3001;
 const table = "users";
@@ -51,28 +52,21 @@ app.get("/api/users", async (req, res) => {
   });
 });
 
-app.post("/api/admin", async function (request, response) {
+app.post("/api/login", async function (request, response) {
   const username = request.body.username;
   const password = request.body.password;
-  console.log("req.body:", username, password);
-  let pool = await sql.connect(sqlConfig);
+  await sql.connect(sqlConfig);
   if (username && password) {
-    let results = await pool
-      .request()
-      .query(
-        `SELECT * FROM ${table} WHERE username = ${username} AND password = ${password}`
-      );
-    console.log(results);
-    if (results.length > 0) {
+    const data = await sql.query`select * from users where username = ${username} and password = ${password}`
+    if (data.recordset.length > 0) {
       request.session.loggedin = true;
       request.session.username = username;
-      return results;
+      response.send(data.recordset[0].Username);
     } else {
-      response.send("Incorrect Username and/or Password!");
+      response.send({ message: "Wrong username or password" });
     }
-    response.end();
   } else {
-    response.send("Please enter Username and Password!");
+    response.send({ message: "Please enter Username and Password!" });
     response.end();
   }
 });

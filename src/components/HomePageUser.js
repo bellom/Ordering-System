@@ -12,7 +12,7 @@ export class HomePageUser extends Component {
           <div className="banner-text">
             <Fade bottom>
               <h1 className="responsive-headline">
-              Welcome to Admin Dashboard!
+              Welcome to User Dashboard!
               </h1>
             </Fade>
             <Fade bottom duration={1200}>
