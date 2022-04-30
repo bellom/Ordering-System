@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import ParticlesBg from "particles-bg";
 import Fade from "react-reveal";
+import { Link } from "react-router-dom";
 
 export class HomePageUser extends Component {
   render() {
@@ -19,6 +20,13 @@ export class HomePageUser extends Component {
               <h3>Login as a User to view list of products</h3>
             </Fade>
             <hr />
+            <Fade bottom duration={2000}>
+              <ul className="social">
+                <Link to="/products" className="button btn project-btn">
+                  <i className="fa fa-book"></i>List Products
+                </Link>
+              </ul>
+            </Fade>
           </div>
         </div>
       </header>

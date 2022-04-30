@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import ParticlesBg from "particles-bg";
 import Fade from "react-reveal";
+import { Link } from "react-router-dom";
 
 export class HomePageAdmin extends Component {
   render() {
@@ -21,6 +22,24 @@ export class HomePageAdmin extends Component {
               </h3>
             </Fade>
             <hr />
+            <Fade bottom duration={2000}>
+              <ul className="social">
+                <Link to="/employees" className="button btn project-btn">
+                  <i className="fa fa-book"></i>List Employees
+                </Link>
+                <Link to="/customers" className="button btn github-btn">
+                  <i className="fa fa-book"></i>List Customers
+                </Link>
+              </ul>
+              <ul className="social">
+                <Link to="/products" className="button btn project-btn">
+                  <i className="fa fa-book"></i>List Products
+                </Link>
+                <Link to="/orders" className="button btn github-btn">
+                  <i className="fa fa-book"></i>List Orders
+                </Link>
+              </ul>
+            </Fade>
           </div>
         </div>
       </header>
