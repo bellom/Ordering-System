@@ -6,7 +6,6 @@ const session = require("express-session");
 const { redirect } = require("express/lib/response");
 const app = express();
 const port = 3001;
-const table = "users";
 
 app.use(cors());
 app.use(express.json());
@@ -42,10 +41,9 @@ const sqlConfig = {
 
 app.get("/api/users", async (req, res) => {
   let pool = await sql.connect(sqlConfig);
-  pool.request().query(`select * from ${table}`, (err, data) => {
+  pool.request().query('select * from products', (err, data) => {
     if (data) {
       res.send(data.recordset);
-      console.log("List of users?", data.recordset);
     } else {
       console.log(err);
     }
@@ -69,4 +67,15 @@ app.post("/api/login", async function (request, response) {
     response.send({ message: "Please enter Username and Password!" });
     response.end();
   }
+});
+
+app.get("/api/products", async (req, res) => {
+  let pool = await sql.connect(sqlConfig);
+  pool.request().query('select * from products', (err, data) => {
+    if (data) {
+      res.send(data.recordset);
+    } else {
+      console.log(err);
+    }
+  });
 });
