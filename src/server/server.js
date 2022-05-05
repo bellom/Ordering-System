@@ -79,3 +79,36 @@ app.get("/api/products", async (req, res) => {
     }
   });
 });
+
+app.get("/api/customers", async (req, res) => {
+  let pool = await sql.connect(sqlConfig);
+  pool.request().query('select * from customers', (err, data) => {
+    if (data) {
+      res.send(data.recordset);
+    } else {
+      console.log(err);
+    }
+  });
+});
+
+app.get("/api/employees", async (req, res) => {
+  let pool = await sql.connect(sqlConfig);
+  pool.request().query('select * from employees', (err, data) => {
+    if (data) {
+      res.send(data.recordset);
+    } else {
+      console.log(err);
+    }
+  });
+});
+
+app.get("/api/orders", async (req, res) => {
+  let pool = await sql.connect(sqlConfig);
+  pool.request().query('select * from orders', (err, data) => {
+    if (data) {
+      res.send(data.recordset);
+    } else {
+      console.log(err);
+    }
+  });
+});
