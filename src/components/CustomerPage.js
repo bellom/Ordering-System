@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import ParticlesBg from "particles-bg";
 import Fade from "react-reveal";
 import axios from "axios";
-import moment from "moment";
 import MaterialTable from "material-table";
 
 export function CustomerPage() {

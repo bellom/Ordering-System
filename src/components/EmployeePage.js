@@ -2,61 +2,61 @@ import React, { useState, useEffect } from "react";
 import ParticlesBg from "particles-bg";
 import Fade from "react-reveal";
 import axios from "axios";
+import MaterialTable from "material-table";
 
 export function EmployeePage() {
-  const [products, setProducts] = useState("");
+  const [employees, setEmployees] = useState("");
+  const [isLoading, setIsLoading] = useState(true);
 
-  const fetchProducts = async () => {
+
+  const fetchEmployees = async () => {
     const res = await axios.get("http://localhost:3001/api/employees");
-
-    if (!res.data) {
-      return <div>Loading...</div>;
-    }
     const data = res.data;
-    setProducts(data);
-    console.log(data);
+    setEmployees(data);
     return data
   };
 
-  useEffect(() => {
-    fetchProducts()
+  useEffect(async () => {
+    await fetchEmployees();
+    setIsLoading(false);
   }, [])
 
-  return (
+  const columns = [
+    { title: "Employee ID", field: "EmployeeID" },
+    { title: "Last Name ", field: "LastName" },
+    { title: "First Name", field: "FirstName" },
+    { title: "Title",        field: "Title" },
+  ];
+
+  return isLoading ? (
     <header id="home">
       <ParticlesBg type="circle" bg={true} />
 
       <div className="row banner">
         <div className="banner-text">
           <Fade bottom duration={1200}>
-            <h3>
-              Find list of our Employees below
-            </h3>
+            <h3>Loading list of our Employees.....</h3>
+          </Fade>
+        </div>
+      </div>
+    </header>
+  ) : (
+    <header id="home">
+      <ParticlesBg type="circle" bg={true} />
+
+      <div className="row banner">
+        <div className="banner-text">
+          <Fade bottom duration={1200}>
+            <h3>Find list of our Employees below</h3>
           </Fade>
           <hr />
-          <table>
-            <thead>
-              <tr>
-                <th scope="col">EmployeeID</th>
-                <th scope="col">LastName</th>
-                <th scope="col">FirstName</th>
-                <th scope="col">Title</th>
-              </tr>
-            </thead>
-            <tbody>
-              {products &&
-                products.map((row) => {
-                  return (
-                    <tr>
-                      <td>{row.EmployeeID}</td>
-                      <td>{row.LastName}</td>
-                      <td>{row.FirstName}</td>
-                      <td>{row.Title}</td>
-                    </tr>
-                  );
-                })}
-            </tbody>
-          </table>
+          <div style={{ maxWidth: "100%" }}>
+            <MaterialTable
+              columns={columns}
+              data={employees}
+              title="Employee Directory"
+            />
+          </div>
         </div>
       </div>
     </header>
