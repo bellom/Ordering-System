@@ -3,7 +3,6 @@ const express = require("express");
 const sql = require("mssql");
 const cors = require("cors");
 const session = require("express-session");
-const { redirect } = require("express/lib/response");
 const app = express();
 const port = 3001;
 
