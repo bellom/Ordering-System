@@ -2,61 +2,62 @@ import React, { useState, useEffect } from "react";
 import ParticlesBg from "particles-bg";
 import Fade from "react-reveal";
 import axios from "axios";
+import moment from "moment";
+import MaterialTable from "material-table";
 
 export function CustomerPage() {
-  const [products, setProducts] = useState("");
+  const [customers, setCustomers] = useState("");
+  const [isLoading, setIsLoading] = useState(true);
 
-  const fetchProducts = async () => {
+
+  const fetchCustomers = async () => {
     const res = await axios.get("http://localhost:3001/api/customers");
-
-    if (!res.data) {
-      return <div>Loading...</div>;
-    }
     const data = res.data;
-    setProducts(data);
-    console.log(data);
+    setCustomers(data);
     return data
   };
 
-  useEffect(() => {
-    fetchProducts()
+  useEffect(async () => {
+    await fetchCustomers();
+    setIsLoading(false);
   }, [])
 
-  return (
+  const columns = [
+    { title: "Customer ID", field: "CustomerID" },
+    { title: "Company Name", field: "CompanyName" },
+    { title: "Contact Name", field: "ContactName" },
+    { title: "Phone",        field: "Phone" },
+  ];
+
+  return isLoading ? (
     <header id="home">
       <ParticlesBg type="circle" bg={true} />
 
       <div className="row banner">
         <div className="banner-text">
           <Fade bottom duration={1200}>
-            <h3>
-              Find list of our Customers below
-            </h3>
+            <h3>Loading list of our Customers.....</h3>
+          </Fade>
+        </div>
+      </div>
+    </header>
+  ) : (
+    <header id="home">
+      <ParticlesBg type="circle" bg={true} />
+
+      <div className="row banner">
+        <div className="banner-text">
+          <Fade bottom duration={1200}>
+            <h3>Find list of our Customers below</h3>
           </Fade>
           <hr />
-          <table>
-            <thead>
-              <tr>
-                <th scope="col">CustomerID</th>
-                <th scope="col">CompanyName</th>
-                <th scope="col">ContactName</th>
-                <th scope="col">Phone</th>
-              </tr>
-            </thead>
-            <tbody>
-              {products &&
-                products.map((row) => {
-                  return (
-                    <tr>
-                      <td>{row.CustomerID}</td>
-                      <td>{row.CompanyName}</td>
-                      <td>{row.ContactName}</td>
-                      <td>{row.Phone}</td>
-                    </tr>
-                  );
-                })}
-            </tbody>
-          </table>
+          <div style={{ maxWidth: "100%" }}>
+            <MaterialTable
+              columns={columns}
+              data={customers}
+              title="Customer Directory"
+            />
+          </div>
         </div>
       </div>
     </header>

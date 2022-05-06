@@ -9,7 +9,7 @@ export function OrderPage() {
   const [orders, setOrders] = useState("");
   const [isLoading, setIsLoading] = useState(true);
 
-  const fetchProducts = async () => {
+  const fetchOrders = async () => {
     const res = await axios.get("http://localhost:3001/api/orders");
     const data = res.data;
     let ordersArray = [];
@@ -30,7 +30,7 @@ export function OrderPage() {
   };
 
   useEffect(async () => {
-    await fetchProducts();
+    await fetchOrders();
     setIsLoading(false);
   }, []);
 
